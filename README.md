@@ -1,4 +1,4 @@
 # Minecraft4Fun
 Minecraft in Python with Ursina Game Engine
 
-(./assets/screenshot.png)
+![alt text](https://github.com/MrDomian/Minecraft4Fun/blob/main/assets/screenshot.png)
