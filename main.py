@@ -92,7 +92,7 @@ class Hand(Entity):
         self.position = Vec2(0.4, -0.6)
 
 
-def terrain(num_x=15, num_y=3, num_z=15):
+def terrain(num_x=10, num_y=0, num_z=10):
     for x in range(num_x):
         for z in range(num_z):
             Voxel(position=(x, 0, z), textures=grass_texture)
@@ -102,8 +102,15 @@ def terrain(num_x=15, num_y=3, num_z=15):
                     Voxel(position=(x, y - num_y - 1, z), textures=bedrock_texture)
 
 
-terrain()
-player = FirstPersonController(position=(5, 10, 5))
+player = FirstPersonController(
+    position=(5, 10, 5),
+    speed=4,
+    height=1,
+    gravity=0.5,
+    jump_height=1.5
+    )
+
+terrain(20, 3, 20)
 sky = Sky()
 hand = Hand()
 
