@@ -15,14 +15,16 @@ block_build = Audio('assets/block_build.ogg', loop=False, autoplay=False)
 block_break = Audio('assets/block_break.ogg', loop=False, autoplay=False)
 block_pick = 1
 
-window.fps_counter.enabled = False
+window.fps_counter.enabled = True
 
 
 def update():
     global block_pick
 
-    if held_keys['left mouse'] or held_keys['right mouse']: hand.active()
-    else: hand.passive()
+    if held_keys['left mouse'] or held_keys['right mouse']:
+        hand.active()
+    else:
+        hand.passive()
 
     if held_keys['escape']: app.quit()
     if held_keys['1']: block_pick = 1
@@ -95,13 +97,13 @@ def terrain(num_x=15, num_y=3, num_z=15):
         for z in range(num_z):
             Voxel(position=(x, 0, z), textures=grass_texture)
             for y in range(num_y):
-                Voxel(position=(x, -y-1, z), textures=stone_texture)
+                Voxel(position=(x, -y - 1, z), textures=stone_texture)
                 if y == 0:
-                    Voxel(position=(x, y-num_y-1, z), textures=bedrock_texture)
+                    Voxel(position=(x, y - num_y - 1, z), textures=bedrock_texture)
 
 
 terrain()
-player = FirstPersonController()
+player = FirstPersonController(position=(5, 10, 5))
 sky = Sky()
 hand = Hand()
 
