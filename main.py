@@ -3,6 +3,7 @@ from ursina.prefabs.first_person_controller import FirstPersonController
 
 app = Ursina()
 
+# Load block textures
 grass_texture = load_texture('assets/grass_block.png')
 stone_texture = load_texture('assets/stone_block.png')
 wood_texture = load_texture('assets/wood_block.png')
@@ -17,10 +18,10 @@ block_pick = 1
 
 window.fps_counter.enabled = True
 
-
 def update():
     global block_pick
 
+    # Handle keyboard events
     if held_keys['left mouse'] or held_keys['right mouse']:
         hand.active()
     else:
@@ -34,7 +35,7 @@ def update():
     if held_keys['5']: block_pick = 5
     if held_keys['6']: block_pick = 6
 
-
+# Class representing a single block
 class Voxel(Button):
     def __init__(self, position=(0, 0, 0), textures=grass_texture):
         super().__init__(
@@ -50,8 +51,10 @@ class Voxel(Button):
 
     def input(self, key):
         if self.hovered:
+            # Handle mouse events
             if key == 'left mouse down':
                 block_build.play()
+                # Create a block based on the selected type
                 if block_pick == 1: Voxel(position=self.position + mouse.normal, textures=grass_texture)
                 if block_pick == 2: Voxel(position=self.position + mouse.normal, textures=dirt_texture)
                 if block_pick == 3: Voxel(position=self.position + mouse.normal, textures=stone_texture)
@@ -62,7 +65,7 @@ class Voxel(Button):
                 block_break.play()
                 destroy(self)
 
-
+# Class representing the sky
 class Sky(Entity):
     def __init__(self):
         super().__init__(
@@ -73,7 +76,7 @@ class Sky(Entity):
             double_sided=True,
         )
 
-
+# Class representing the player's hand
 class Hand(Entity):
     def __init__(self):
         super().__init__(
@@ -91,7 +94,7 @@ class Hand(Entity):
     def passive(self):
         self.position = Vec2(0.4, -0.6)
 
-
+# Function for generating terrain from blocks
 def terrain(num_x=10, num_y=0, num_z=10):
     for x in range(num_x):
         for z in range(num_z):
@@ -101,7 +104,7 @@ def terrain(num_x=10, num_y=0, num_z=10):
                 if y == 0:
                     Voxel(position=(x, y - num_y - 1, z), textures=bedrock_texture)
 
-
+# Initialize the player and generate terrain
 player = FirstPersonController(
     position=(5, 10, 5),
     speed=4,
